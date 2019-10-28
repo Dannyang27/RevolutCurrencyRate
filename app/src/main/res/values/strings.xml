@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">RevolutExchange</string>
+    <string name="rates">Rates</string>
+    <string name="rate_sample">1182.04</string>
+</resources>
