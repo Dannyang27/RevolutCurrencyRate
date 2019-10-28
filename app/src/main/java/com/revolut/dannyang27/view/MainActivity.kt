@@ -26,16 +26,17 @@ class MainActivity : AppCompatActivity() {
         currency_toolbar.title = getString(R.string.rates)
         currencyViewModel = ViewModelProviders.of(this).get(CurrencyViewModel::class.java)
         currencyViewModel.getCurrencyRate().observe(this, Observer {
-            Log.d("REVOLUT", "Eur: 1.00 | Pounds: ${it.GBP}")
+            viewAdapter.updateList(it)
         })
 
-        viewAdapter = CurrencyAdapter(mutableListOf("1","1","1","1","1","1"))
+        viewAdapter = CurrencyAdapter(mutableListOf())
         viewManager = LinearLayoutManager(this)
 
         currencyRecyclerView = findViewById<RecyclerView>(R.id.currency_list).apply {
             setHasFixedSize(true)
             layoutManager = viewManager
             adapter = viewAdapter
+            itemAnimator = null
         }
 
         currencyViewModel.initCurrencyObserver(this)

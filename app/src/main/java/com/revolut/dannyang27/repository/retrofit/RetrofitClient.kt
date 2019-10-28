@@ -11,17 +11,14 @@ object RetrofitClient {
     private const val baseUrl = "https://revolut.duckdns.org/"
     private var roomDatabase: MyRoomDatabase? = null
 
-    private fun createService() : RateService{
-        return Retrofit.Builder()
-            .baseUrl(baseUrl)
-            .addConverterFactory(MoshiConverterFactory.create())
-            .build()
-            .create(RateService::class.java)
-    }
+    private val service =  Retrofit.Builder()
+                    .baseUrl(baseUrl)
+                    .addConverterFactory(MoshiConverterFactory.create())
+                    .build()
+                    .create(RateService::class.java)
 
     suspend fun getRates(context: Context, base: String = "EUR"){
         roomDatabase = MyRoomDatabase.getMyRoomDatabase(context)
-        val service = createService()
         val response = service.getLatestRate(base)
 
         try{
