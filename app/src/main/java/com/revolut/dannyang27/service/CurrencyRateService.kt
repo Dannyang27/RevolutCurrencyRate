@@ -8,7 +8,6 @@ import com.revolut.dannyang27.repository.retrofit.RetrofitClient
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import org.jetbrains.anko.toast
 
 class CurrencyRateService : Service() {
     private lateinit var mHandler: Handler
@@ -19,20 +18,15 @@ class CurrencyRateService : Service() {
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        toast("Service started")
 
         mHandler = Handler()
-        mRunnable = Runnable {
-            fetchCurrency()
-        }
-
+        mRunnable = Runnable { fetchCurrency() }
         mHandler.postDelayed(mRunnable, 1000)
         return START_STICKY
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        toast("Service destroyed.")
         mHandler.removeCallbacks(mRunnable)
     }
 
