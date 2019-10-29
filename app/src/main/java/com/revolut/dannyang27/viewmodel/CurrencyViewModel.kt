@@ -6,16 +6,16 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
-import com.revolut.dannyang27.CurrencyManager
+import com.revolut.dannyang27.model.Currency
 import com.revolut.dannyang27.repository.room.MyRoomDatabase
 import com.revolut.dannyang27.service.CurrencyRateService
 
 class CurrencyViewModel : ViewModel(){
     private lateinit var serviceIntent: Intent
     private var roomDatabase: MyRoomDatabase? = null
-    private val currencyRate = MutableLiveData<MutableList<Pair<String, Double>>>()
+    private val currencyRate = MutableLiveData<List<Currency>>()
 
-    fun getCurrencyRate(): LiveData<MutableList<Pair<String, Double>>> = currencyRate
+    fun getCurrencyRate(): LiveData<List<Currency>> = currencyRate
 
     fun initCurrencyObserver(activity: FragmentActivity){
         serviceIntent = Intent(activity, CurrencyRateService::class.java)
@@ -23,7 +23,8 @@ class CurrencyViewModel : ViewModel(){
 
         roomDatabase = MyRoomDatabase.getMyRoomDatabase(activity)
         roomDatabase?.currencyRateDao()?.getCurrencyRate()?.observe(activity, Observer {
-            currencyRate.postValue(CurrencyManager.getPairOfCurrencies(activity, it))
+            //TODO check base currency and do multiplications
+            currencyRate.postValue(it.rateList)
         })
     }
 }
