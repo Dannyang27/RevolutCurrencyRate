@@ -1,7 +1,6 @@
 package com.revolut.dannyang27.view.adapter
 
 import android.preference.PreferenceManager
-import android.text.InputType
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -9,11 +8,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.revolut.dannyang27.CurrencyManager
 import com.revolut.dannyang27.R
 import com.revolut.dannyang27.diffutil.CurrencyDiffCallback
+import com.revolut.dannyang27.model.Currency
 import com.revolut.dannyang27.view.viewholder.CurrencyViewHolder
 import com.squareup.picasso.Picasso
 import org.jetbrains.anko.toast
 
-class CurrencyAdapter(private val currencies: MutableList<Pair<String, Double>>): RecyclerView.Adapter<CurrencyViewHolder>(){
+class CurrencyAdapter(private val currencies: MutableList<Currency>): RecyclerView.Adapter<CurrencyViewHolder>(){
 
     override fun getItemCount() = currencies.size
 
@@ -23,14 +23,11 @@ class CurrencyAdapter(private val currencies: MutableList<Pair<String, Double>>)
     }
 
     override fun onBindViewHolder(holder: CurrencyViewHolder, position: Int) {
-        val pair = currencies[position]
-        val (currencyName, drawable) = CurrencyManager.getDrawableByName(pair.first)
-        holder.currencyCode.text = pair.first
+        val currency = currencies[position]
+        val (currencyName, drawable) = CurrencyManager.getDrawableByName(currency.code)
+        holder.currencyCode.text = currency.code
         holder.currencyName.text = currencyName
-        holder.currencyRate.setText(String.format("%.2f", pair.second))
-        holder.currencyRate.isFocusable = false
-        holder.currencyRate.isFocusableInTouchMode = false
-        holder.currencyRate.inputType = InputType.TYPE_NULL
+        holder.currencyRate.setText(String.format("%.2f", currency.rate))
 
         Picasso.get()
             .load(drawable)
@@ -39,14 +36,14 @@ class CurrencyAdapter(private val currencies: MutableList<Pair<String, Double>>)
         holder.itemView.setOnClickListener {
             val pref = PreferenceManager.getDefaultSharedPreferences(it.context)
             pref.edit()
-                .putString("base", pair.first)
+                .putString("base", currency.code)
                 .apply()
 
-            it.context.toast(pair.first)
+            it.context.toast(currency.code)
         }
     }
 
-    fun updateList( newCurrencies: MutableList<Pair<String, Double>>){
+    fun updateList( newCurrencies: MutableList<Currency>){
         val diffResult: DiffUtil.DiffResult = DiffUtil.calculateDiff(CurrencyDiffCallback(currencies, newCurrencies))
         currencies.clear()
         currencies.addAll(newCurrencies)

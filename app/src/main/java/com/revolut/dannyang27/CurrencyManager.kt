@@ -1,9 +1,8 @@
 package com.revolut.dannyang27
 
-import android.content.Context
-import android.preference.PreferenceManager
 import com.revolut.dannyang27.enum.FlagEnum
-import com.revolut.dannyang27.model.CurrencyRate
+import com.revolut.dannyang27.model.Currency
+import com.revolut.dannyang27.model.restmodel.Rates
 
 object CurrencyManager{
 
@@ -45,82 +44,44 @@ object CurrencyManager{
         }
     }
 
-    fun getPairOfCurrencies(context: Context, currencies: CurrencyRate): MutableList<Pair<String, Double>>{
-        val base = PreferenceManager.getDefaultSharedPreferences(context).getString("base", "EUR")
-        val pairs: MutableList<Pair<String, Double>> = mutableListOf()
-
-
-        pairs.add(Pair("EUR", 1.00))
-        pairs.add(Pair("AUD", currencies.AUD!!))
-        pairs.add(Pair("BGN", currencies.BGN!!))
-        pairs.add(Pair("BRL", currencies.BRL!!))
-        pairs.add(Pair("CAD", currencies.CAD!!))
-        pairs.add(Pair("CHF", currencies.CHF!!))
-        pairs.add(Pair("CNY", currencies.CNY!!))
-        pairs.add(Pair("CZK", currencies.CZK!!))
-        pairs.add(Pair("DKK", currencies.DKK!!))
-        pairs.add(Pair("GBP", currencies.GBP!!))
-        pairs.add(Pair("HKD", currencies.HKD!!))
-        pairs.add(Pair("HRK", currencies.HRK!!))
-        pairs.add(Pair("HUF", currencies.HUF!!))
-        pairs.add(Pair("IDR", currencies.IDR!!))
-        pairs.add(Pair("ILS", currencies.ILS!!))
-        pairs.add(Pair("ISK", currencies.ISK!!))
-        pairs.add(Pair("INR", currencies.INR!!))
-        pairs.add(Pair("JPY", currencies.JPY!!))
-        pairs.add(Pair("KRW", currencies.KRW!!))
-        pairs.add(Pair("MXN", currencies.MXN!!))
-        pairs.add(Pair("MYR", currencies.MYR!!))
-        pairs.add(Pair("NOK", currencies.NOK!!))
-        pairs.add(Pair("NZD", currencies.NZD!!))
-        pairs.add(Pair("PHP", currencies.PHP!!))
-        pairs.add(Pair("PLN", currencies.PLN!!))
-        pairs.add(Pair("RON", currencies.RON!!))
-        pairs.add(Pair("RUB", currencies.RUB!!))
-        pairs.add(Pair("SEK", currencies.SEK!!))
-        pairs.add(Pair("SGD", currencies.SGD!!))
-        pairs.add(Pair("THB", currencies.THB!!))
-        pairs.add(Pair("TRY", currencies.TRY!!))
-        pairs.add(Pair("USD", currencies.USD!!))
-        pairs.add(Pair("ZAR", currencies.ZAR!!))
-
-        return pairs
-    }
-
-    private fun getCurrencyByCode(code: String, currencyRate: CurrencyRate): Double{
-        return when(code){
-            FlagEnum.AUD.name -> currencyRate.AUD!!
-            FlagEnum.BGN.name -> currencyRate.BGN!!
-            FlagEnum.BRL.name -> currencyRate.BRL!!
-            FlagEnum.CAD.name -> currencyRate.CAD!!
-            FlagEnum.CHF.name -> currencyRate.CHF!!
-            FlagEnum.CNY.name -> currencyRate.CNY!!
-            FlagEnum.CZK.name -> currencyRate.CZK!!
-            FlagEnum.DKK.name -> currencyRate.DKK!!
-            FlagEnum.GBP.name -> currencyRate.GBP!!
-            FlagEnum.HKD.name -> currencyRate.HKD!!
-            FlagEnum.HRK.name -> currencyRate.HRK!!
-            FlagEnum.HUF.name -> currencyRate.HUF!!
-            FlagEnum.IDR.name -> currencyRate.IDR!!
-            FlagEnum.ILS.name -> currencyRate.ILS!!
-            FlagEnum.INR.name -> currencyRate.INR!!
-            FlagEnum.ISK.name -> currencyRate.ISK!!
-            FlagEnum.JPY.name -> currencyRate.JPY!!
-            FlagEnum.MXN.name -> currencyRate.MXN!!
-            FlagEnum.KRW.name -> currencyRate.KRW!!
-            FlagEnum.NOK.name -> currencyRate.NOK!!
-            FlagEnum.NZD.name -> currencyRate.NZD!!
-            FlagEnum.PHP.name -> currencyRate.PHP!!
-            FlagEnum.PLN.name -> currencyRate.PLN!!
-            FlagEnum.RON.name -> currencyRate.RON!!
-            FlagEnum.RUB.name -> currencyRate.RUB!!
-            FlagEnum.SEK.name -> currencyRate.SEK!!
-            FlagEnum.SGD.name -> currencyRate.SGD!!
-            FlagEnum.THB.name -> currencyRate.THB!!
-            FlagEnum.TRY.name -> currencyRate.TRY!!
-            FlagEnum.USD.name -> currencyRate.USD!!
-            FlagEnum.ZAR.name -> currencyRate.ZAR!!
-            else -> 1.00
+    fun convertRateToList(rates: Rates?): MutableList<Currency>{
+        val list = mutableListOf<Currency>()
+        rates?.let {
+            list.add(Currency("EUR", 1.00))
+            list.add(Currency("AUD", rates.AUD!!))
+            list.add(Currency("BGN", rates.BGN!!))
+            list.add(Currency("BRL", rates.BRL!!))
+            list.add(Currency("CAD", rates.CAD!!))
+            list.add(Currency("CHF", rates.CHF!!))
+            list.add(Currency("CNY", rates.CNY!!))
+            list.add(Currency("CZK", rates.CZK!!))
+            list.add(Currency("DKK", rates.DKK!!))
+            list.add(Currency("GBP", rates.GBP!!))
+            list.add(Currency("HKD", rates.HKD!!))
+            list.add(Currency("HRK", rates.HRK!!))
+            list.add(Currency("HUF", rates.HUF!!))
+            list.add(Currency("IDR", rates.IDR!!))
+            list.add(Currency("ILS", rates.ILS!!))
+            list.add(Currency("INR", rates.INR!!))
+            list.add(Currency("ISK", rates.ISK!!))
+            list.add(Currency("JPY", rates.JPY!!))
+            list.add(Currency("MXN", rates.MXN!!))
+            list.add(Currency("MYR", rates.MYR!!))
+            list.add(Currency("KRW", rates.KRW!!))
+            list.add(Currency("NOK", rates.NOK!!))
+            list.add(Currency("NZD", rates.NZD!!))
+            list.add(Currency("PHP", rates.PHP!!))
+            list.add(Currency("PLN", rates.PLN!!))
+            list.add(Currency("RON", rates.RON!!))
+            list.add(Currency("RUB", rates.RUB!!))
+            list.add(Currency("SEK", rates.SEK!!))
+            list.add(Currency("SGD", rates.SGD!!))
+            list.add(Currency("THB", rates.THB!!))
+            list.add(Currency("TRY", rates.TRY!!))
+            list.add(Currency("USD", rates.USD!!))
+            list.add(Currency("ZAR", rates.ZAR!!))
         }
+
+        return list
     }
 }
