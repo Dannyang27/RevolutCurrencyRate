@@ -33,7 +33,8 @@ class CurrencyRateService : Service() {
     private fun fetchCurrency(){
         CoroutineScope(Dispatchers.IO).launch {
             RetrofitClient.getRates(this@CurrencyRateService)
-            mHandler.postDelayed(mRunnable, 1000)
         }
+
+        mHandler.postDelayed(mRunnable, 1000)
     }
 }

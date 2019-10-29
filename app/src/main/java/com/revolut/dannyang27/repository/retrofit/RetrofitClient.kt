@@ -20,6 +20,7 @@ object RetrofitClient {
     suspend fun getRates(context: Context, base: String = "EUR") {
         roomDatabase = MyRoomDatabase.getMyRoomDatabase(context)
         val response = service.getLatestRate(base)
+        CurrencyManager.baseCurrency = base
 
         try {
             if (response.isSuccessful) {

@@ -24,10 +24,11 @@ class CurrencyAdapter(private val currencies: MutableList<Currency>): RecyclerVi
 
     override fun onBindViewHolder(holder: CurrencyViewHolder, position: Int) {
         val currency = currencies[position]
+
         val (currencyName, drawable) = CurrencyManager.getDrawableByName(currency.code)
         holder.currencyCode.text = currency.code
         holder.currencyName.text = currencyName
-        holder.currencyRate.setText(String.format("%.2f", currency.rate))
+        holder.currencyRate.setText(String.format("%.2f", (currency.rate * CurrencyManager.rateCurrency!!)))
 
         Picasso.get()
             .load(drawable)

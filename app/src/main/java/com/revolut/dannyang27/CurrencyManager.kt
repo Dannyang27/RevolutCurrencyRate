@@ -6,6 +6,9 @@ import com.revolut.dannyang27.model.restmodel.Rates
 
 object CurrencyManager{
 
+    var baseCurrency: String? = null
+    var rateCurrency: Double? = null
+
     fun getDrawableByName(flagCode: String): Pair<String, Int>{
         return when(flagCode){
             FlagEnum.AUD.name -> Pair(FlagEnum.AUD.currencyName, FlagEnum.AUD.drawable)
@@ -46,8 +49,8 @@ object CurrencyManager{
 
     fun convertRateToList(rates: Rates?): MutableList<Currency>{
         val list = mutableListOf<Currency>()
+
         rates?.let {
-            list.add(Currency("EUR", 1.00))
             list.add(Currency("AUD", rates.AUD!!))
             list.add(Currency("BGN", rates.BGN!!))
             list.add(Currency("BRL", rates.BRL!!))
@@ -56,6 +59,7 @@ object CurrencyManager{
             list.add(Currency("CNY", rates.CNY!!))
             list.add(Currency("CZK", rates.CZK!!))
             list.add(Currency("DKK", rates.DKK!!))
+            list.add(Currency("EUR", 1.00))
             list.add(Currency("GBP", rates.GBP!!))
             list.add(Currency("HKD", rates.HKD!!))
             list.add(Currency("HRK", rates.HRK!!))
