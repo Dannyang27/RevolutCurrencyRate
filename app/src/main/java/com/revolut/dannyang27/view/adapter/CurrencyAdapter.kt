@@ -1,5 +1,7 @@
 package com.revolut.dannyang27.view.adapter
 
+import android.preference.PreferenceManager
+import android.text.InputType
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -9,6 +11,7 @@ import com.revolut.dannyang27.R
 import com.revolut.dannyang27.diffutil.CurrencyDiffCallback
 import com.revolut.dannyang27.view.viewholder.CurrencyViewHolder
 import com.squareup.picasso.Picasso
+import org.jetbrains.anko.toast
 
 class CurrencyAdapter(private val currencies: MutableList<Pair<String, Double>>): RecyclerView.Adapter<CurrencyViewHolder>(){
 
@@ -25,10 +28,22 @@ class CurrencyAdapter(private val currencies: MutableList<Pair<String, Double>>)
         holder.currencyCode.text = pair.first
         holder.currencyName.text = currencyName
         holder.currencyRate.setText(String.format("%.2f", pair.second))
+        holder.currencyRate.isFocusable = false
+        holder.currencyRate.isFocusableInTouchMode = false
+        holder.currencyRate.inputType = InputType.TYPE_NULL
 
         Picasso.get()
             .load(drawable)
             .into(holder.image)
+
+        holder.itemView.setOnClickListener {
+            val pref = PreferenceManager.getDefaultSharedPreferences(it.context)
+            pref.edit()
+                .putString("base", pair.first)
+                .apply()
+
+            it.context.toast(pair.first)
+        }
     }
 
     fun updateList( newCurrencies: MutableList<Pair<String, Double>>){

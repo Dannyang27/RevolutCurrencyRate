@@ -5,7 +5,6 @@ import com.revolut.dannyang27.model.CurrencyRate
 import com.revolut.dannyang27.repository.room.MyRoomDatabase
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
-import java.lang.Exception
 
 object RetrofitClient {
     private const val baseUrl = "https://revolut.duckdns.org/"

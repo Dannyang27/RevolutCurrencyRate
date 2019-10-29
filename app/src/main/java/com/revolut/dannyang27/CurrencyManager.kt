@@ -1,5 +1,7 @@
 package com.revolut.dannyang27
 
+import android.content.Context
+import android.preference.PreferenceManager
 import com.revolut.dannyang27.enum.FlagEnum
 import com.revolut.dannyang27.model.CurrencyRate
 
@@ -43,8 +45,11 @@ object CurrencyManager{
         }
     }
 
-    fun getPairOfCurrencies(currencies: CurrencyRate): MutableList<Pair<String, Double>>{
+    fun getPairOfCurrencies(context: Context, currencies: CurrencyRate): MutableList<Pair<String, Double>>{
+        val base = PreferenceManager.getDefaultSharedPreferences(context).getString("base", "EUR")
         val pairs: MutableList<Pair<String, Double>> = mutableListOf()
+
+
         pairs.add(Pair("EUR", 1.00))
         pairs.add(Pair("AUD", currencies.AUD!!))
         pairs.add(Pair("BGN", currencies.BGN!!))
@@ -80,5 +85,42 @@ object CurrencyManager{
         pairs.add(Pair("ZAR", currencies.ZAR!!))
 
         return pairs
+    }
+
+    private fun getCurrencyByCode(code: String, currencyRate: CurrencyRate): Double{
+        return when(code){
+            FlagEnum.AUD.name -> currencyRate.AUD!!
+            FlagEnum.BGN.name -> currencyRate.BGN!!
+            FlagEnum.BRL.name -> currencyRate.BRL!!
+            FlagEnum.CAD.name -> currencyRate.CAD!!
+            FlagEnum.CHF.name -> currencyRate.CHF!!
+            FlagEnum.CNY.name -> currencyRate.CNY!!
+            FlagEnum.CZK.name -> currencyRate.CZK!!
+            FlagEnum.DKK.name -> currencyRate.DKK!!
+            FlagEnum.GBP.name -> currencyRate.GBP!!
+            FlagEnum.HKD.name -> currencyRate.HKD!!
+            FlagEnum.HRK.name -> currencyRate.HRK!!
+            FlagEnum.HUF.name -> currencyRate.HUF!!
+            FlagEnum.IDR.name -> currencyRate.IDR!!
+            FlagEnum.ILS.name -> currencyRate.ILS!!
+            FlagEnum.INR.name -> currencyRate.INR!!
+            FlagEnum.ISK.name -> currencyRate.ISK!!
+            FlagEnum.JPY.name -> currencyRate.JPY!!
+            FlagEnum.MXN.name -> currencyRate.MXN!!
+            FlagEnum.KRW.name -> currencyRate.KRW!!
+            FlagEnum.NOK.name -> currencyRate.NOK!!
+            FlagEnum.NZD.name -> currencyRate.NZD!!
+            FlagEnum.PHP.name -> currencyRate.PHP!!
+            FlagEnum.PLN.name -> currencyRate.PLN!!
+            FlagEnum.RON.name -> currencyRate.RON!!
+            FlagEnum.RUB.name -> currencyRate.RUB!!
+            FlagEnum.SEK.name -> currencyRate.SEK!!
+            FlagEnum.SGD.name -> currencyRate.SGD!!
+            FlagEnum.THB.name -> currencyRate.THB!!
+            FlagEnum.TRY.name -> currencyRate.TRY!!
+            FlagEnum.USD.name -> currencyRate.USD!!
+            FlagEnum.ZAR.name -> currencyRate.ZAR!!
+            else -> 1.00
+        }
     }
 }

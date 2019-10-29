@@ -7,7 +7,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import com.revolut.dannyang27.CurrencyManager
-import com.revolut.dannyang27.model.CurrencyRate
 import com.revolut.dannyang27.repository.room.MyRoomDatabase
 import com.revolut.dannyang27.service.CurrencyRateService
 
@@ -24,7 +23,7 @@ class CurrencyViewModel : ViewModel(){
 
         roomDatabase = MyRoomDatabase.getMyRoomDatabase(activity)
         roomDatabase?.currencyRateDao()?.getCurrencyRate()?.observe(activity, Observer {
-            currencyRate.postValue(CurrencyManager.getPairOfCurrencies(it))
+            currencyRate.postValue(CurrencyManager.getPairOfCurrencies(activity, it))
         })
     }
 }
