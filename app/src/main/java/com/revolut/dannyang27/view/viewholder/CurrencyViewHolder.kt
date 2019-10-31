@@ -4,12 +4,18 @@ import android.view.View
 import android.widget.EditText
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.revolut.dannyang27.R
+import butterknife.BindView
+import butterknife.ButterKnife
+import com.revolut.dannyang27.R2
 import de.hdodenhof.circleimageview.CircleImageView
 
 class CurrencyViewHolder(view: View): RecyclerView.ViewHolder(view){
-    val image: CircleImageView = view.findViewById(R.id.viewholder_flagicon)
-    val currencyCode: TextView = view.findViewById(R.id.viewholder_code)
-    val currencyName: TextView = view.findViewById(R.id.viewholder_name)
-    val currencyRate: EditText = view.findViewById(R.id.viewholder_ratevalue)
+    @BindView(R2.id.viewholder_flagicon) lateinit var image: CircleImageView
+    @BindView(R2.id.viewholder_code) lateinit var currencyCode: TextView
+    @BindView(R2.id.viewholder_name) lateinit var currencyName: TextView
+    @BindView(R2.id.viewholder_ratevalue) lateinit var currencyRate: EditText
+
+    init {
+        ButterKnife.bind(this, view)
+    }
 }
