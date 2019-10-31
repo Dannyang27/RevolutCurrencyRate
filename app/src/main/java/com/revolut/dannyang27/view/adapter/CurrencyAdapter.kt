@@ -11,7 +11,6 @@ import com.revolut.dannyang27.diffutil.CurrencyDiffCallback
 import com.revolut.dannyang27.model.Currency
 import com.revolut.dannyang27.view.viewholder.CurrencyViewHolder
 import com.squareup.picasso.Picasso
-import org.jetbrains.anko.toast
 
 class CurrencyAdapter(private val currencies: MutableList<Currency>): RecyclerView.Adapter<CurrencyViewHolder>(){
 
@@ -28,7 +27,13 @@ class CurrencyAdapter(private val currencies: MutableList<Currency>): RecyclerVi
         val (currencyName, drawable) = CurrencyManager.getDrawableByName(currency.code)
         holder.currencyCode.text = currency.code
         holder.currencyName.text = currencyName
-        holder.currencyRate.setText(String.format("%.2f", (currency.rate * CurrencyManager.rateCurrency!!)))
+
+        val value = currency.rate * CurrencyManager.rateCurrency!!
+        if(CurrencyManager.currentValue == null){
+            holder.currencyRate.setText(String.format("%.4f", value))
+        }else{
+            holder.currencyRate.setText(String.format("%.4f", value * CurrencyManager.currentValue!!))
+        }
 
         Picasso.get()
             .load(drawable)
@@ -39,8 +44,6 @@ class CurrencyAdapter(private val currencies: MutableList<Currency>): RecyclerVi
             pref.edit()
                 .putString("base", currency.code)
                 .apply()
-
-            it.context.toast(currency.code)
         }
     }
 

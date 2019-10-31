@@ -6,9 +6,12 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.revolut.dannyang27.CurrencyManager
 import com.revolut.dannyang27.R
+import com.revolut.dannyang27.extension.isNumeric
 import com.revolut.dannyang27.view.adapter.CurrencyAdapter
 import com.revolut.dannyang27.viewmodel.CurrencyViewModel
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -28,6 +31,17 @@ class MainActivity : AppCompatActivity() {
             viewAdapter.updateList(it.toMutableList())
         })
 
+        currencyViewModel.getSelectedCurrency().observe(this, Observer {
+            val (currencyName, drawable) = CurrencyManager.getDrawableByName(it.code)
+
+            Picasso.get()
+                .load(drawable)
+                .into(currency_flagicon)
+
+            currency_code.text = it.code
+            currency_name.text = currencyName
+        })
+
         viewAdapter = CurrencyAdapter(mutableListOf())
         viewManager = LinearLayoutManager(this)
 
@@ -39,5 +53,23 @@ class MainActivity : AppCompatActivity() {
         }
 
         currencyViewModel.initCurrencyObserver(this)
+
+        currency_ratevalue.setOnClickListener {
+            val isNumeric = currency_ratevalue.text.toString().isNumeric()
+            if(isNumeric){
+                val value = currency_ratevalue.text.toString().toDouble()
+                currencyViewModel.updateCurrentValue(value)
+            }
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        currencyViewModel.startService(this)
+    }
+
+    override fun onStop() {
+        super.onStop()
+        currencyViewModel.stopService(this)
     }
 }

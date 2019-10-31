@@ -8,6 +8,7 @@ object CurrencyManager{
 
     var baseCurrency: String? = null
     var rateCurrency: Double? = null
+    var currentValue: Double? = null
 
     fun getDrawableByName(flagCode: String): Pair<String, Int>{
         return when(flagCode){

@@ -14,8 +14,7 @@
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/viewholder_flagicon"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:src="@drawable/sgd"/>
+            android:layout_height="match_parent"/>
     </LinearLayout>
 
     <LinearLayout
@@ -54,10 +53,11 @@
             android:text="@string/rate_sample"
             android:textStyle="bold"
             android:textSize="22sp"
+            android:maxLength="8"
+            android:focusable="false"
             android:inputType="numberDecimal"
             android:layout_gravity="center_vertical"
             android:layout_weight="1"
             android:layout_margin="5dp"/>
-
     </LinearLayout>
 </LinearLayout>
