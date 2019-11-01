@@ -48,9 +48,7 @@ class CurrencyViewHolder(view: View): RecyclerView.ViewHolder(view){
             if(isNumeric){
                 val value = text.toString().toDouble()
                 CurrencyManager.currentValue = value
-                MainActivity.viewAdapter.notifyItemRangeChanged(
-                    1,
-                    MainActivity.viewAdapter.itemCount - 1)
+                MainActivity.notifyRangeExceptFirst()
             }
         }
     }

@@ -21,7 +21,11 @@ class MainActivity : AppCompatActivity() {
     private lateinit var viewManager: RecyclerView.LayoutManager
 
     companion object{
-        lateinit var viewAdapter: CurrencyAdapter
+        private lateinit var viewAdapter: CurrencyAdapter
+
+        fun notifyRangeExceptFirst(){
+            viewAdapter.notifyItemRangeChanged(1, viewAdapter.itemCount - 1)
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
