@@ -12,4 +12,4 @@ input becomes first responder. When you’re changing the amount the app must si
 update the corresponding value for other currencies.
 
 The App follows MVVM principles where we observe in this case the RoomDatabase (LiveData<List<Currency>>)
-<img src="https://github.com/Dannyang27/RevolutCurrencyRate/blob/master/revolut_gif.gif" width="250" height="450">
+<img src="https://github.com/Dannyang27/RevolutCurrencyRate/blob/master/readmefiles/revolut_gif.gif" width="250" height="450">
