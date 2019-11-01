@@ -1,7 +1,8 @@
 package com.revolut.dannyang27.repository.retrofit
 
 import android.content.Context
-import com.revolut.dannyang27.CurrencyManager
+import com.revolut.dannyang27.businesslogic.util.CurrencyManager
+import com.revolut.dannyang27.model.Currency
 import com.revolut.dannyang27.model.CurrencyRate
 import com.revolut.dannyang27.repository.room.MyRoomDatabase
 import retrofit2.Retrofit
@@ -25,11 +26,12 @@ object RetrofitClient {
         try {
             if (response.isSuccessful) {
                 val currency = response.body()
-                val rates = currency?.rates
-                val rateList = CurrencyManager.convertRateToList(rates)
-
-                val currencyRate = CurrencyRate(1, currency?.base, currency?.date, rateList)
-                roomDatabase?.currencyRateDao()?.insert(currencyRate)
+                currency?.rates?.let {
+                    val listOfCurrencies = mutableListOf(Currency(base, 1.00, true))
+                    listOfCurrencies.addAll(currency.rates.map { Currency(it.key, it.value, false) })
+                    val currencyRate = CurrencyRate(rateList = listOfCurrencies)
+                    roomDatabase?.currencyRateDao()?.insert(currencyRate)
+                }
             }
         } catch (e: Exception) {
             e.printStackTrace()

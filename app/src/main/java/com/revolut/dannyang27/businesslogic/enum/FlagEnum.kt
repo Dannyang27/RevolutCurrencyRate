@@ -1,4 +1,4 @@
-package com.revolut.dannyang27.enum
+package com.revolut.dannyang27.businesslogic.enum
 
 import com.revolut.dannyang27.R
 

@@ -5,4 +5,5 @@
     <color name="colorAccent">#F8F8F8</color>
     <color name="colorPrimaryText">#000</color>
     <color name="colorAccentText">#BBBBBB</color>
+    <color name="colorEdittextSelection">#58C7DD</color>
 </resources>
