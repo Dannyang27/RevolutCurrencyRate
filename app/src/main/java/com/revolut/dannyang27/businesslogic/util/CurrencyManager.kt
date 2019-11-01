@@ -1,14 +1,11 @@
-package com.revolut.dannyang27
+package com.revolut.dannyang27.businesslogic.util
 
-import com.revolut.dannyang27.enum.FlagEnum
-import com.revolut.dannyang27.model.Currency
-import com.revolut.dannyang27.model.restmodel.Rates
+import com.revolut.dannyang27.businesslogic.enum.FlagEnum
 
 object CurrencyManager{
 
     var baseCurrency: String? = null
-    var rateCurrency: Double? = null
-    var currentValue: Double? = null
+    var currentValue: Double = 1.00
 
     fun getDrawableByName(flagCode: String): Pair<String, Int>{
         return when(flagCode){
@@ -46,47 +43,5 @@ object CurrencyManager{
             FlagEnum.ZAR.name -> Pair(FlagEnum.ZAR.currencyName, FlagEnum.ZAR.drawable)
             else -> Pair(FlagEnum.EUR.currencyName, FlagEnum.EUR.drawable)
         }
-    }
-
-    fun convertRateToList(rates: Rates?): MutableList<Currency>{
-        val list = mutableListOf<Currency>()
-
-        rates?.let {
-            list.add(Currency("AUD", rates.AUD!!))
-            list.add(Currency("BGN", rates.BGN!!))
-            list.add(Currency("BRL", rates.BRL!!))
-            list.add(Currency("CAD", rates.CAD!!))
-            list.add(Currency("CHF", rates.CHF!!))
-            list.add(Currency("CNY", rates.CNY!!))
-            list.add(Currency("CZK", rates.CZK!!))
-            list.add(Currency("DKK", rates.DKK!!))
-            list.add(Currency("EUR", 1.00))
-            list.add(Currency("GBP", rates.GBP!!))
-            list.add(Currency("HKD", rates.HKD!!))
-            list.add(Currency("HRK", rates.HRK!!))
-            list.add(Currency("HUF", rates.HUF!!))
-            list.add(Currency("IDR", rates.IDR!!))
-            list.add(Currency("ILS", rates.ILS!!))
-            list.add(Currency("INR", rates.INR!!))
-            list.add(Currency("ISK", rates.ISK!!))
-            list.add(Currency("JPY", rates.JPY!!))
-            list.add(Currency("MXN", rates.MXN!!))
-            list.add(Currency("MYR", rates.MYR!!))
-            list.add(Currency("KRW", rates.KRW!!))
-            list.add(Currency("NOK", rates.NOK!!))
-            list.add(Currency("NZD", rates.NZD!!))
-            list.add(Currency("PHP", rates.PHP!!))
-            list.add(Currency("PLN", rates.PLN!!))
-            list.add(Currency("RON", rates.RON!!))
-            list.add(Currency("RUB", rates.RUB!!))
-            list.add(Currency("SEK", rates.SEK!!))
-            list.add(Currency("SGD", rates.SGD!!))
-            list.add(Currency("THB", rates.THB!!))
-            list.add(Currency("TRY", rates.TRY!!))
-            list.add(Currency("USD", rates.USD!!))
-            list.add(Currency("ZAR", rates.ZAR!!))
-        }
-
-        return list
     }
 }

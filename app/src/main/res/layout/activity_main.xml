@@ -16,69 +16,6 @@
         android:theme="?attr/actionBarTheme"
         android:paddingHorizontal="70dp"/>
 
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="80dp">
-
-        <LinearLayout
-            android:layout_width="70dp"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:padding="10dp">
-
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/currency_flagicon"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:gravity="center_vertical"
-                android:layout_weight="2">
-
-                <TextView
-                    android:id="@+id/currency_code"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textStyle="bold"
-                    android:textColor="@color/colorPrimaryText"
-                    android:textSize="16sp"
-                    android:textAllCaps="true"
-                    android:layout_marginVertical="5dp"/>
-
-                <TextView
-                    android:id="@+id/currency_name"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/colorAccentText"/>
-            </LinearLayout>
-
-            <EditText
-                android:id="@+id/currency_ratevalue"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="@string/rate_sample"
-                android:textStyle="bold"
-                android:maxLength="8"
-                android:backgroundTint="@color/colorAccentText"
-                android:textSize="22sp"
-                android:inputType="numberDecimal"
-                android:layout_gravity="center_vertical"
-                android:layout_weight="1"
-                android:layout_margin="5dp"/>
-
-        </LinearLayout>
-    </LinearLayout>
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/currency_list"
         android:layout_width="match_parent"

@@ -1,16 +1,13 @@
 package com.revolut.dannyang27.view.adapter
 
-import android.preference.PreferenceManager
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.revolut.dannyang27.CurrencyManager
 import com.revolut.dannyang27.R
-import com.revolut.dannyang27.diffutil.CurrencyDiffCallback
+import com.revolut.dannyang27.businesslogic.diffutil.CurrencyDiffCallback
 import com.revolut.dannyang27.model.Currency
 import com.revolut.dannyang27.view.viewholder.CurrencyViewHolder
-import com.squareup.picasso.Picasso
 
 class CurrencyAdapter(private val currencies: MutableList<Currency>): RecyclerView.Adapter<CurrencyViewHolder>(){
 
@@ -23,31 +20,10 @@ class CurrencyAdapter(private val currencies: MutableList<Currency>): RecyclerVi
 
     override fun onBindViewHolder(holder: CurrencyViewHolder, position: Int) {
         val currency = currencies[position]
-
-        val (currencyName, drawable) = CurrencyManager.getDrawableByName(currency.code)
-        holder.currencyCode.text = currency.code
-        holder.currencyName.text = currencyName
-
-        val value = currency.rate * CurrencyManager.rateCurrency!!
-        if(CurrencyManager.currentValue == null){
-            holder.currencyRate.setText(String.format("%.4f", value))
-        }else{
-            holder.currencyRate.setText(String.format("%.4f", value * CurrencyManager.currentValue!!))
-        }
-
-        Picasso.get()
-            .load(drawable)
-            .into(holder.image)
-
-        holder.itemView.setOnClickListener {
-            val pref = PreferenceManager.getDefaultSharedPreferences(it.context)
-            pref.edit()
-                .putString("base", currency.code)
-                .apply()
-        }
+        holder.bind(currency)
     }
 
-    fun updateList( newCurrencies: MutableList<Currency>){
+    fun updateList( newCurrencies: List<Currency>){
         val diffResult: DiffUtil.DiffResult = DiffUtil.calculateDiff(CurrencyDiffCallback(currencies, newCurrencies))
         currencies.clear()
         currencies.addAll(newCurrencies)

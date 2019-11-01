@@ -13,7 +13,7 @@
         android:theme="@style/AppTheme">
 
         <service
-            android:name=".service.CurrencyRateService"
+            android:name="com.revolut.dannyang27.businesslogic.service.CurrencyRateService"
             android:enabled="true"
             android:exported="true" />
 

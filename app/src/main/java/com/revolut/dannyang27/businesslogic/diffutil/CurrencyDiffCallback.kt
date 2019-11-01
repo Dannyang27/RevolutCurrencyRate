@@ -1,10 +1,11 @@
-package com.revolut.dannyang27.diffutil
+package com.revolut.dannyang27.businesslogic.diffutil
 
 import androidx.recyclerview.widget.DiffUtil
 import com.revolut.dannyang27.model.Currency
 
-class CurrencyDiffCallback(private val oldCurrencies: MutableList<Currency>,
-                           private val newCurrencies: MutableList<Currency>): DiffUtil.Callback(){
+class CurrencyDiffCallback(private val oldCurrencies: List<Currency>,
+                           private val newCurrencies: List<Currency>): DiffUtil.Callback(){
+
     override fun getOldListSize() = oldCurrencies.size
     override fun getNewListSize() = newCurrencies.size
     override fun areItemsTheSame(oldPos: Int, newPos: Int) = oldCurrencies[oldPos].code == newCurrencies[newPos].code
