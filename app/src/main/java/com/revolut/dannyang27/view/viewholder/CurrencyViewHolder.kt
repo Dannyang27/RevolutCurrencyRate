@@ -1,15 +1,18 @@
 package com.revolut.dannyang27.view.viewholder
 
-import android.preference.PreferenceManager
+import android.text.Editable
 import android.view.View
 import android.widget.EditText
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import butterknife.BindView
 import butterknife.ButterKnife
+import butterknife.OnTextChanged
 import com.revolut.dannyang27.R
+import com.revolut.dannyang27.businesslogic.extension.isNumeric
 import com.revolut.dannyang27.businesslogic.util.CurrencyManager
 import com.revolut.dannyang27.model.Currency
+import com.revolut.dannyang27.view.MainActivity
 import com.squareup.picasso.Picasso
 import de.hdodenhof.circleimageview.CircleImageView
 
@@ -19,6 +22,8 @@ class CurrencyViewHolder(view: View): RecyclerView.ViewHolder(view){
     @BindView(R.id.viewholder_name) lateinit var currencyName: TextView
     @BindView(R.id.viewholder_ratevalue) lateinit var currencyRate: EditText
 
+    private var isBase = false
+
     init {
         ButterKnife.bind(this, view)
     }
@@ -27,22 +32,26 @@ class CurrencyViewHolder(view: View): RecyclerView.ViewHolder(view){
         val (name, drawable) = CurrencyManager.getDrawableByName(currency.code)
         currencyCode.text = currency.code
         currencyName.text = name
-        if(currency.isBase){
-            currencyRate.isFocusable = true
-            currencyRate.setText(String.format("%.4f",CurrencyManager.currentValue))
+        isBase = currency.isBase
 
-        }else{
+        if(!isBase){
             currencyRate.setText(String.format("%.4f", currency.rate * CurrencyManager.currentValue))
         }
 
         Picasso.get().load(drawable).into(image)
-        itemView.setOnClickListener {
-            val pref = PreferenceManager.getDefaultSharedPreferences(it.context)
-            pref.edit()
-                .putString("base", currency.code)
-                .apply()
+    }
 
-            CurrencyManager.baseCurrency = currency.code
+    @OnTextChanged(R.id.viewholder_ratevalue, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
+    fun afterTextChanged(text: Editable?){
+        if(isBase){
+            val isNumeric = text.toString().isNumeric()
+            if(isNumeric){
+                val value = text.toString().toDouble()
+                CurrencyManager.currentValue = value
+                MainActivity.viewAdapter.notifyItemRangeChanged(
+                    1,
+                    MainActivity.viewAdapter.itemCount - 1)
+            }
         }
     }
 }

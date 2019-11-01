@@ -18,8 +18,11 @@ class MainActivity : AppCompatActivity() {
     @BindView(R.id.currency_list) lateinit var currencies: RecyclerView
 
     private lateinit var currencyViewModel: CurrencyViewModel
-    private lateinit var viewAdapter: CurrencyAdapter
     private lateinit var viewManager: RecyclerView.LayoutManager
+
+    companion object{
+        lateinit var viewAdapter: CurrencyAdapter
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
